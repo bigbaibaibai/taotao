@@ -19,7 +19,6 @@
         <module>taotao-manager-web</module>
     </modules>
 
-
     <dependencies>
 
         <dependency>
