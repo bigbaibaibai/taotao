@@ -1,10 +1,20 @@
 package xyz.thishome.common.pojo;
 
-import java.util.List;
-
+/**
+ * 异步tree封装结果集
+ */
 public class EasyUITreeNode {
+    /**
+     * id 节点id
+     */
     private Long id;
+    /**
+     * text 显示文本
+     */
     private String text;
+    /**
+     * 状态，如果为父节点，则值为"closed"，如果为叶子节点，则值为"open"
+     */
     private String state;
 
     public void setId(Long id) {

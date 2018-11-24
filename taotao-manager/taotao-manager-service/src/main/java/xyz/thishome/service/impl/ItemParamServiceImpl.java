@@ -11,6 +11,7 @@ import xyz.thishome.pojo.TbItemParam;
 import xyz.thishome.pojo.TbItemParamExample;
 import xyz.thishome.service.ItemParamService;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -47,10 +48,23 @@ public class ItemParamServiceImpl implements ItemParamService {
         TbItemParamExample example = new TbItemParamExample();
         TbItemParamExample.Criteria criteria = example.createCriteria();
         criteria.andItemCatIdEqualTo(itemCatId);
-        List<TbItemParam> itemParams = itemParamMapper.selectByExample(example);
+        List<TbItemParam> itemParams = itemParamMapper.selectByExampleWithBLOBs(example);
         if (itemParams != null && itemParams.size() > 0) {
             return TaotaoResult.ok(itemParams.get(0));
         }
+        return TaotaoResult.ok();
+    }
+
+    /**
+     * 保存一个模板到数据库中，返回TaotaoResult,status为200表示成功
+     *
+     * @return
+     */
+    @Override
+    public TaotaoResult saveItemParam(TbItemParam itemParam) {
+        itemParam.setCreated(new Date());
+        itemParam.setUpdated(new Date());
+        itemParamMapper.insertSelective(itemParam);
         return TaotaoResult.ok();
     }
 }

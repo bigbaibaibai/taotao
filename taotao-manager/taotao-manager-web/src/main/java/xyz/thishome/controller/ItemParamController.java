@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xyz.thishome.common.pojo.EasyUIResult;
 import xyz.thishome.common.pojo.TaotaoResult;
+import xyz.thishome.pojo.TbItemParam;
 import xyz.thishome.service.ItemParamService;
 
 @RestController
@@ -42,5 +43,19 @@ public class ItemParamController {
         return itemParamService.getItemParam(itemCatId);
     }
 
+    /**
+     * 响应保存模板请求
+     *
+     * @param cid
+     * @param paramData 需要存入数据库，参数规格模板的json字符串
+     * @return
+     */
+    @RequestMapping("/save/{cid}")
+    public TaotaoResult saveItemParam(@PathVariable("cid") Long cid, @RequestParam("paramData") String paramData) {
+        TbItemParam itemParam = new TbItemParam();
+        itemParam.setItemCatId(cid);
+        itemParam.setParamData(paramData);
+        return itemParamService.saveItemParam(itemParam);
+    }
 
 }
