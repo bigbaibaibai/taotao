@@ -1,6 +1,5 @@
 package xyz.thishome.controller;
 
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import xyz.thishome.common.pojo.EasyUIResult;
@@ -42,11 +41,14 @@ public class ItemController {
     }
 
     /**
-     * 添加商品
+     * @param item       表单中商品信息
+     * @param desc       商品描述
+     * @param itemParams 商品参数规格JSON
+     * @return TaotaoResult
      */
     @RequestMapping(value = "/item/save", method = RequestMethod.POST)
-    public TaotaoResult itemSave(TbItem item, @RequestParam("desc") String desc) {
-        return itemService.createItem(item, desc);
+    public TaotaoResult itemSave(TbItem item, @RequestParam("desc") String desc, @RequestParam("itemParams") String itemParams) {
+        return itemService.createItem(item, desc, itemParams);
     }
 
 

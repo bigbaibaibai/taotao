@@ -2,6 +2,7 @@ package xyz.thishome.service;
 
 import xyz.thishome.common.pojo.EasyUIResult;
 import xyz.thishome.common.pojo.TaotaoResult;
+import xyz.thishome.pojo.TbItemParam;
 
 public interface ItemParamService {
 
@@ -21,4 +22,12 @@ public interface ItemParamService {
      * @return
      */
     TaotaoResult getItemParam(Long itemCatId);
+
+    /**
+     * 保存一个模板到数据库中，返回TaotaoResult,status为200表示成功
+     *
+     * @param itemParam 参数规格模板
+     * @return
+     */
+    TaotaoResult saveItemParam(TbItemParam itemParam);
 }

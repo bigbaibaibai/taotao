@@ -8,7 +8,7 @@ public class EasyUIResult {
 
     private List<?> rows;
 
-    public EasyUIResult(Integer total, List<?> rows) {
+    public EasyUIResult() {
         this.total = total;
         this.rows = rows;
     }

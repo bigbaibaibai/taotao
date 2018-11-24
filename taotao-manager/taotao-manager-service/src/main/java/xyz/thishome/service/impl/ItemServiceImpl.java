@@ -9,8 +9,10 @@ import xyz.thishome.common.pojo.TaotaoResult;
 import xyz.thishome.common.utils.IDUtils;
 import xyz.thishome.mapper.TbItemDescMapper;
 import xyz.thishome.mapper.TbItemMapper;
+import xyz.thishome.mapper.TbItemParamItemMapper;
 import xyz.thishome.pojo.TbItem;
 import xyz.thishome.pojo.TbItemDesc;
+import xyz.thishome.pojo.TbItemParamItem;
 import xyz.thishome.service.ItemService;
 
 import java.util.Date;
@@ -21,6 +23,9 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemMapper itemMapper;
+
+    @Autowired
+    private TbItemParamItemMapper itemParamItemMapper;
 
     @Autowired
     private TbItemDescMapper itemDescMapper;
@@ -38,7 +43,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     /**
-     * 获取所有商品
+     * 分页获取商品列表
      *
      * @return
      */
@@ -54,11 +59,13 @@ public class ItemServiceImpl implements ItemService {
     /**
      * 添加商品
      *
-     * @param item
+     * @param item       表单中商品信息
+     * @param itemParams 商品规格说明JSON
+     * @param decs       商品描述
      * @return
      */
     @Override
-    public TaotaoResult createItem(TbItem item, String decs) {
+    public TaotaoResult createItem(TbItem item, String decs, String itemParams) {
         //补全id
         long id = IDUtils.genItemId();
         item.setId(id);
@@ -68,9 +75,17 @@ public class ItemServiceImpl implements ItemService {
         item.setUpdated(new Date());
         //补全上架时间
         item.setCreated(new Date());
-        //添加到数据库中
+        //添加商品到数据库中
         itemMapper.insertSelective(item);
-        return createDesc(id, decs);
+        //添加商品规格说明到数据库中
+        if (insertItemParams(id, itemParams).getStatus() != 200) {
+            throw new RuntimeException("添加商品规格参数异常！");
+        }
+        //添加商品描述到数据库中
+        if (createDesc(id, decs).getStatus() != 200) {
+            throw new RuntimeException("添加商品描述异常！");
+        }
+        return TaotaoResult.ok();
     }
 
     /**
@@ -87,6 +102,22 @@ public class ItemServiceImpl implements ItemService {
         itemDesc.setCreated(new Date());
         itemDesc.setUpdated(new Date());
         itemDescMapper.insertSelective(itemDesc);
+        return TaotaoResult.ok();
+    }
+
+    /**
+     * 添加商品规格说明
+     *
+     * @param itemParams 商品参数规格JSON
+     * @param id         商品id
+     */
+    private TaotaoResult insertItemParams(Long id, String itemParams) {
+        TbItemParamItem paramItem = new TbItemParamItem();
+        paramItem.setItemId(id);
+        paramItem.setParamData(itemParams);
+        paramItem.setCreated(new Date());
+        paramItem.setUpdated(new Date());
+        itemParamItemMapper.insert(paramItem);
         return TaotaoResult.ok();
     }
 }
