@@ -3,8 +3,8 @@ package xyz.thishome.search.service.impl;
 import org.apache.solr.client.solrj.SolrQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import xyz.thishome.common.pojo.SearchResult;
 import xyz.thishome.search.dao.SearchDao;
-import xyz.thishome.search.pojo.SearchResult;
 import xyz.thishome.search.service.SearchService;
 
 @Service

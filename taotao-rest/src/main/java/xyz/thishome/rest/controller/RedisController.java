@@ -17,9 +17,18 @@ public class RedisController {
     @Autowired
     private RedisService redisService;
 
+    /**
+     * 同步页面显示内容信息的缓存
+     *
+     * @param contentCId
+     * @return
+     */
     @RequestMapping("/content/{contentCId}")
     public TaotaoResult syncContent(@PathVariable("contentCId") Long contentCId) {
         return redisService.syncContent(contentCId);
     }
+
+
+    //同步ItemCat商品分类信息的缓存
 
 }

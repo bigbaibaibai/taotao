@@ -1,4 +1,4 @@
-package xyz.thishome.search.pojo;
+package xyz.thishome.common.pojo;
 
 import java.util.List;
 

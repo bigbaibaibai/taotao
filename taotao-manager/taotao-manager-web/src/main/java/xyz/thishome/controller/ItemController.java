@@ -30,9 +30,12 @@ public class ItemController {
         return map;
     }
 
-
     /**
      * 获商品列表，分页后商品信息
+     *
+     * @param page
+     * @param rows
+     * @return
      */
     @RequestMapping("/item/list")
     public EasyUIResult getList(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "rows", defaultValue = "30") int rows) {
@@ -41,6 +44,8 @@ public class ItemController {
     }
 
     /**
+     * 添加商品信息
+     *
      * @param item       表单中商品信息
      * @param desc       商品描述
      * @param itemParams 商品参数规格JSON

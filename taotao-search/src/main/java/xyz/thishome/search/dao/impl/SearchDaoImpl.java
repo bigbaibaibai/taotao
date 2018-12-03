@@ -7,9 +7,9 @@ import org.apache.solr.common.SolrDocument;
 import org.apache.solr.common.SolrDocumentList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import xyz.thishome.common.pojo.SearchItem;
+import xyz.thishome.common.pojo.SearchResult;
 import xyz.thishome.search.dao.SearchDao;
-import xyz.thishome.search.pojo.SearchItem;
-import xyz.thishome.search.pojo.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;

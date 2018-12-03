@@ -1,7 +1,7 @@
 package xyz.thishome.search.dao;
 
 import org.apache.solr.client.solrj.SolrQuery;
-import xyz.thishome.search.pojo.SearchResult;
+import xyz.thishome.common.pojo.SearchResult;
 
 /**
  * 搜索商品的dao

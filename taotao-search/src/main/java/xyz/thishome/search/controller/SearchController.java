@@ -32,7 +32,6 @@ public class SearchController {
                                @RequestParam(value = "page", defaultValue = "1") Integer page,
                                @RequestParam(value = "rows", defaultValue = "60") Integer rows) {
         try {
-            System.out.println("搜索字符串：" + queryString);
             if (StringUtils.isBlank(queryString)) {
                 return TaotaoResult.build(400, "搜索信息不能为空");
             }

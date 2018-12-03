@@ -17,10 +17,11 @@ public class RedisServiceImpl implements RedisService {
     @Value("${REDIS_KEY_MAP_INDEX_CONTENT}")
     private String REDIS_KEY_MAP_INDEX_CONTENT;
 
+
     @Override
     public TaotaoResult syncContent(Long catId) {
         try {
-            jedisClient.hdel(REDIS_KEY_MAP_INDEX_CONTENT, "getContentByCatId" + catId);
+            jedisClient.hdel(REDIS_KEY_MAP_INDEX_CONTENT, catId + "");
         } catch (Exception e) {
             e.printStackTrace();
             return TaotaoResult.build(500, ExceptionUtil.getStackTrace(e));

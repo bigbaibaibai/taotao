@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="xyz.thishome.search.mapper.SearchItemMapper">
    
-    <select id="getListSearchItem" resultType="xyz.thishome.search.pojo.SearchItem">
+    <select id="getListSearchItem" resultType="xyz.thishome.common.pojo.SearchItem">
         SELECT
             a.id,
             a.title,

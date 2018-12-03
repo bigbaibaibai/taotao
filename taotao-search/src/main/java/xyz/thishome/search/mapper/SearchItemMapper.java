@@ -1,6 +1,7 @@
 package xyz.thishome.search.mapper;
 
-import xyz.thishome.search.pojo.SearchItem;
+
+import xyz.thishome.common.pojo.SearchItem;
 
 import java.util.List;
 

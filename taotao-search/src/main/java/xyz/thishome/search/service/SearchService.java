@@ -1,6 +1,7 @@
 package xyz.thishome.search.service;
 
-import xyz.thishome.search.pojo.SearchResult;
+
+import xyz.thishome.common.pojo.SearchResult;
 
 /**
  * 搜索服务

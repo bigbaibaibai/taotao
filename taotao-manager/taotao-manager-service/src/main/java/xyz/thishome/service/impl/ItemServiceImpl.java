@@ -3,20 +3,26 @@ package xyz.thishome.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import xyz.thishome.common.pojo.EasyUIResult;
 import xyz.thishome.common.pojo.TaotaoResult;
+import xyz.thishome.common.utils.HttpClientUtil;
 import xyz.thishome.common.utils.IDUtils;
+import xyz.thishome.mapper.TbItemCatMapper;
 import xyz.thishome.mapper.TbItemDescMapper;
 import xyz.thishome.mapper.TbItemMapper;
 import xyz.thishome.mapper.TbItemParamItemMapper;
 import xyz.thishome.pojo.TbItem;
+import xyz.thishome.pojo.TbItemCat;
 import xyz.thishome.pojo.TbItemDesc;
 import xyz.thishome.pojo.TbItemParamItem;
 import xyz.thishome.service.ItemService;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ItemServiceImpl implements ItemService {
@@ -29,6 +35,15 @@ public class ItemServiceImpl implements ItemService {
 
     @Autowired
     private TbItemDescMapper itemDescMapper;
+
+    @Autowired
+    private TbItemCatMapper itemCatMapper;
+
+    @Value("${SEARCH_BASE_URL}")
+    private String SEARCH_BASE_URL;
+
+    @Value("${SEARCH_CONTENT_SYNC_URL}")
+    private String SEARCH_CONTENT_SYNC_URL;
 
     /**
      * 根据id获取商品
@@ -85,8 +100,36 @@ public class ItemServiceImpl implements ItemService {
         if (createDesc(id, decs).getStatus() != 200) {
             throw new RuntimeException("添加商品描述异常！");
         }
+        //添加商品信息到搜索引擎中
+        try {
+            importSeach(item, decs);
+        } catch (Exception e) {
+            throw new RuntimeException("添加商品信息到搜索引擎异常！");
+        }
         return TaotaoResult.ok();
     }
+
+    /**
+     * 导入到搜索引擎中
+     *
+     * @param item
+     * @param decs
+     */
+    private void importSeach(TbItem item, String decs) {
+        //获取分类名称
+        TbItemCat tbItemCat = itemCatMapper.selectByPrimaryKey(item.getCid());
+        //封装post请求属性
+        Map<String, String> params = new HashMap();
+        params.put("id", String.valueOf(item.getId()));
+        params.put("title", item.getTitle());
+        params.put("price", String.valueOf(item.getPrice()));
+        params.put("image", item.getImage());
+        params.put("categoryName", tbItemCat.getName());
+        params.put("itemDesc", decs);
+        //向服务端发出请求
+        HttpClientUtil.doPost(SEARCH_BASE_URL + SEARCH_CONTENT_SYNC_URL, params);
+    }
+
 
     /**
      * 添加商品描述

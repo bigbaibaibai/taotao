@@ -1,10 +1,8 @@
 package xyz.thishome.rest.service.impl;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import xyz.thishome.common.utils.JsonUtils;
 import xyz.thishome.mapper.TbItemCatMapper;
 import xyz.thishome.pojo.TbItemCat;
 import xyz.thishome.pojo.TbItemCatExample;
@@ -12,6 +10,7 @@ import xyz.thishome.rest.dao.JedisClient;
 import xyz.thishome.rest.pojo.CatNode;
 import xyz.thishome.rest.pojo.CatResult;
 import xyz.thishome.rest.service.ItemCatService;
+import xyz.thishome.rest.utils.RedisUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class ItemCatServiceImpl implements ItemCatService {
     @Autowired
     private TbItemCatMapper itemCatMapper;
 
-    @Value("${REDSI_KEY_STRING_ITEM_CAT_LIST}")
+    @Value("${REDIS_KEY_STRING_ITEM_CAT_LIST}")
     private String REDSI_KEY_STRING_ITEM_CAT_LIST;
 
     @Autowired
@@ -37,26 +36,16 @@ public class ItemCatServiceImpl implements ItemCatService {
     public CatResult getItemCatList() {
 
         //查缓存
-        try {
-            String redisString = jedisClient.hget(REDSI_KEY_STRING_ITEM_CAT_LIST,"getItemCatList");
-            if (!StringUtils.isBlank(redisString)) {
-                CatResult catResult = JsonUtils.jsonToPojo(redisString, CatResult.class);
-                return catResult;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        CatResult catResult1 = RedisUtil.get(jedisClient, REDSI_KEY_STRING_ITEM_CAT_LIST, CatResult.class);
+        if (catResult1 != null) {
+            return catResult1;
         }
-
+        //数据库查询
         CatResult catResult = new CatResult();
         catResult.setData(getCatList(0l));
 
         //添加到缓存中
-        try {
-            jedisClient.hset(REDSI_KEY_STRING_ITEM_CAT_LIST,
-                    JsonUtils.objectToJson(catResult),"getItemCatList");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        RedisUtil.set(jedisClient, REDSI_KEY_STRING_ITEM_CAT_LIST, catResult);
 
         return catResult;
     }

@@ -29,10 +29,10 @@ public class ContentServiceImpl implements ContentService {
      */
     @Override
     public String getContentList() {
-        //发出http请求，接受反馈数据，json字符串
-        String get = HttpClientUtil.doGet(restBaseUrl + restIndexAdUrl);
-        //处理json字符串
         try {
+            //发出http请求，接受反馈数据，json字符串
+            String get = HttpClientUtil.doGet(restBaseUrl + restIndexAdUrl);
+            //处理json字符串
             //把json字符串转化为一个taotaoResult对象，date为一个list集合，集合中元素为TbContent对象
             TaotaoResult result = TaotaoResult.formatToList(get, TbContent.class);
             //获取TbContent集合

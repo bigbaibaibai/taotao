@@ -1,4 +1,4 @@
-package xyz.thishome.search.pojo;
+package xyz.thishome.common.pojo;
 
 /**
  * 搜索中商品信息的pojo
@@ -68,4 +68,16 @@ public class SearchItem {
     public void setItemDesc(String itemDesc) {
         this.itemDesc = itemDesc;
     }
+
+    public String[] getImages() {
+        if (image != null) {
+            String[] split = image.split(",");
+            return split;
+        }
+        return null;
+    }
+
+    public void setImages(String[] images) {
+    }
+
 }
