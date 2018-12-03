@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Maven: xyz.thihome:taotao-manager-mapper:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://F:/RepMaven/xyz/thihome/taotao-manager-mapper/1.0-SNAPSHOT/taotao-manager-mapper-1.0-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/taotao-manager/taotao-manager-mapper/taotao-manager-mapper-1.0-SNAPSHOT-javadoc.jar!/" />
+      <root url="jar://F:/RepMaven/xyz/thihome/taotao-manager-mapper/1.0-SNAPSHOT/taotao-manager-mapper-1.0-SNAPSHOT-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/taotao-manager/taotao-manager-mapper/taotao-manager-mapper-1.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://F:/RepMaven/xyz/thihome/taotao-manager-mapper/1.0-SNAPSHOT/taotao-manager-mapper-1.0-SNAPSHOT-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
